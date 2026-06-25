@@ -1,4 +1,3 @@
-import { writeSleep } from "@/api/healthConnect";
 import { formatDay, getGreeting } from "@/constants/types";
 import { useAuth } from "@/hooks/useAuth";
 import { useHealthData } from "@/hooks/useHealthData";
@@ -105,8 +104,6 @@ export default function HomeScreen() {
   ] as const;
 
   if (isLoading) return null;
-  writeSleep();
-
   return (
     <SafeAreaView className="flex-1 bg-white" edges={["top"]}>
       <ScrollView

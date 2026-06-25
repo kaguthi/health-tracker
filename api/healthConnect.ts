@@ -140,20 +140,20 @@ export const writeSteps = async () => {
     await insertRecords([
       {
         recordType: "Steps",
-        startTime: "2026-05-19T00:00:00.000Z",
-        endTime: "2026-05-19T23:53:15.405Z",
+        startTime: "2026-06-04T00:00:00.000Z",
+        endTime: "2026-06-04T23:53:15.405Z",
         count: 10000,
       },
       {
         recordType: "Steps",
-        startTime: "2026-05-17T00:00:00.000Z",
-        endTime: "2026-05-17T23:53:15.405Z",
+        startTime: "2026-06-03T00:00:00.000Z",
+        endTime: "2026-06-03T23:53:15.405Z",
         count: 8500,
       },
       {
         recordType: "Steps",
-        startTime: "2026-05-16T00:00:00.000Z",
-        endTime: "2026-05-16T23:53:15.405Z",
+        startTime: "2026-06-02T00:00:00.000Z",
+        endTime: "2026-06-02T23:53:15.405Z",
         count: 9200,
       },
     ]);
@@ -177,12 +177,12 @@ export const writeHeartRate = async () => {
     await insertRecords([
       {
         recordType: "HeartRate",
-        startTime: "2026-05-19T12:00:00.000Z",
-        endTime: "2026-05-19T12:01:00.000Z",
+        startTime: "2026-06-04T12:00:00.000Z",
+        endTime: "2026-06-04T12:01:00.000Z",
         samples: [
-          { time: "2026-05-19T12:00:00.000Z", beatsPerMinute: 70 },
-          { time: "2026-05-19T12:00:30.000Z", beatsPerMinute: 72 },
-          { time: "2026-05-19T12:01:00.000Z", beatsPerMinute: 68 },
+          { time: "2026-06-04T12:00:00.000Z", beatsPerMinute: 70 },
+          { time: "2026-06-04T12:00:30.000Z", beatsPerMinute: 72 },
+          { time: "2026-06-04T12:01:00.000Z", beatsPerMinute: 68 },
         ],
       },
     ]);
@@ -206,28 +206,28 @@ export const writeSleep = async () => {
     await insertRecords([
       {
         recordType: "SleepSession",
-        startTime: "2026-05-18T22:00:00.000Z",
-        endTime: "2026-05-19T06:00:00.000Z",
+        startTime: "2026-06-04T22:00:00.000Z",
+        endTime: "2026-06-05T06:00:00.000Z",
         stages: [
           {
             stage: 4,
-            startTime: "2026-05-18T22:00:00.000Z",
-            endTime: "2026-05-19T00:00:00.000Z",
+            startTime: "2026-06-04T22:00:00.000Z",
+            endTime: "2026-06-05T00:00:00.000Z",
           },
           {
             stage: 5,
-            startTime: "2026-05-19T00:00:00.000Z",
-            endTime: "2026-05-19T02:00:00.000Z",
+            startTime: "2026-06-05T00:00:00.000Z",
+            endTime: "2026-06-05T02:00:00.000Z",
           },
           {
             stage: 6,
-            startTime: "2026-05-19T02:00:00.000Z",
-            endTime: "2026-05-19T04:00:00.000Z",
+            startTime: "2026-06-05T02:00:00.000Z",
+            endTime: "2026-06-05T04:00:00.000Z",
           },
           {
             stage: 1,
-            startTime: "2026-05-19T04:00:00.000Z",
-            endTime: "2026-05-19T06:00:00.000Z",
+            startTime: "2026-06-05T04:00:00.000Z",
+            endTime: "2026-06-05T06:00:00.000Z",
           },
         ],
       },
@@ -251,8 +251,8 @@ export const writeActiveCalories = async () => {
     await insertRecords([
       {
         recordType: "ActiveCaloriesBurned",
-        startTime: "2026-05-19T00:00:00.000Z",
-        endTime: "2026-05-19T23:53:15.405Z",
+        startTime: "2026-06-04T00:00:00.000Z",
+        endTime: "2026-06-04T23:53:15.405Z",
         energy: { value: 500, unit: "kilocalories" },
       },
     ]);
@@ -260,4 +260,27 @@ export const writeActiveCalories = async () => {
   } catch (error) {
     console.error("Error inserting active calories records:", error);
   }
+};
+
+export const writeDistance = async () => {
+  const { initialized, grantedPermissions } =
+    await healthConnectInitAndPermission([
+      { accessType: "write", recordType: "Distance" },
+    ]);
+  if (!initialized || !grantedPermissions.length) {
+    return;
+  }
+  const result = await insertRecords([
+    {
+      recordType: "Distance",
+      distance: {
+        value: 1500,
+        unit: "meters",
+      },
+      startTime: "2024-06-12T08:00:00.000Z",
+      endTime: "2024-06-12T08:30:00.000Z",
+    },
+  ]);
+
+  console.log("Distance data inserted successfully");
 };
